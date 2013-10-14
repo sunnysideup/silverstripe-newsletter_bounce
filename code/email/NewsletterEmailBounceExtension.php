@@ -11,6 +11,10 @@ class NewsletterEmailBounceExtension extends Extension {
 	function updateNewsletterEmail($me){
 		$this->owner->addCustomHeader(self::$header_name_member_id, "123");
 		$this->owner->addCustomHeader(self::$header_name_to_email, $this->owner->To());
+		From: "From Name" <from_name@ourdomain.com>
+		$this->owner->addCustomHeader("Reply-To",NewsletterBounceTask::get_email());
+		$this->owner->addCustomHeader("Errors-To",NewsletterBounceTask::get_email());
+		$this->owner->addCustomHeader("Return-Path",NewsletterBounceTask::get_email());
 	}
 
 

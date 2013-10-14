@@ -7,13 +7,14 @@ class NewsletterBounceTask extends BuildTask {
 		public static function get_email() {return self::$email;}
 
 	private static $password = '';
-		public static function set_password($s) {self::$email = $s;}
-		public static function get_password() {return self::$email;}
+		public static function set_password($s) {self::$password = $s;}
+		public static function get_password() {return self::$password;}
 
 	protected $title = 'Mark bounced newsletter emails';
 
 	protected $description = "Opens up a g-mail inbox and looks for .";
 
+	protected $debug = true;
 
 	function run($request) {
 		$server = '{imap.gmail.com:993/imap/ssl}';
@@ -22,6 +23,9 @@ class NewsletterBounceTask extends BuildTask {
 			$emails = imap_search($mailbox, 'UNFLAGGED', SE_UID);
 			if($emails) {
 				foreach($emails as $emailID) {
+					if($this->debug) {
+						echo "<hr /><hr /><hr /><hr />$emailID<hr /><pre>";
+					}
 					$bounce = false;
 					$to = "";
 					$headers = imap_body($mailbox, $emailID, FT_UID);
@@ -30,12 +34,14 @@ class NewsletterBounceTask extends BuildTask {
 						$header = explode(':', $header);
 						if(count($header) == 2) {
 							list($name, $value) = $header;
-								if($name == "bounce") {
-									$bounce = true;
-								}
-								if($name == "To") {
-									$to = Convert::raw2sql($to);
-								}
+							if($this->debug) {
+								echo "<hr />$name<br />$value";
+							}
+							if($name == "bounce") {
+								$bounce = true;
+							}
+							if($name == "To") {
+								$to = Convert::raw2sql($to);
 							}
 						}
 					}
@@ -47,11 +53,10 @@ class NewsletterBounceTask extends BuildTask {
 
 							$SQL_bounceTime = Convert::raw2sql("$date $time");
 
-							$duplicateBounce = DataObject::get_one("Email_BounceRecord",
-								"\"BounceEmail\" = '$to'");
+							$duplicateBounce = DataObject::get_one("NewsletterEmailBounceRecord","\"BounceEmail\" = '$to'");
 
 							if(!$duplicateBounce) {
-								$record = new Email_BounceRecord();
+								$record = new NewsletterEmailBounceRecord();
 								$record->BounceEmail = $to;
 								$record->BounceMessage = $error;
 								$record->MemberID = $member->ID;
@@ -68,12 +73,15 @@ class NewsletterBounceTask extends BuildTask {
 					else {
 						//imap_setflag_full($mailbox, $emailID, '\Flagged', ST_UID);
 					}
+					if($this->debug) {
+						echo "</pre>";
+					}
 				}
 			}
 			imap_close($mailbox);
 		}
 		else {
-			user_error("Can not find mailbox", E_USER_NOTICE)
+			user_error("Can not find mailbox", E_USER_NOTICE);
 		}
 	}
 
