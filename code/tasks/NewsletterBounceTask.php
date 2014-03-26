@@ -46,14 +46,17 @@ class NewsletterBounceTask extends BuildTask {
 						}
 					}
 					if($bounce && $to) {
-						$member = Member::get()->filter(array("Email" => $to))->first();
+						$member = Member::get()
+							->filter(array("Email" => $to))
+							->first();
 						if($member) {
 							$member->BlacklistedEmail = true;
 							$member->write();
 
 							$SQL_bounceTime = Convert::raw2sql("$date $time");
 
-							$duplicateBounce = NewsletterEmailBounceRecord::get()->filter(array("BounceEmail" => $to))->first();
+							$duplicateBounce = NewsletterEmailBounceRecord::get()
+							->filter(array("BounceEmail" => $to))->first();
 							if(!$duplicateBounce) {
 								$record = new NewsletterEmailBounceRecord();
 								$record->BounceEmail = $to;
