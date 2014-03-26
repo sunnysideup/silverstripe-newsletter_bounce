@@ -13,6 +13,6 @@ Object::add_extension('NewsletterEmail', 'NewsletterEmailBounceExtension');
 //NewsletterBounceTask::set_password("pissword");
 
 //MAY SET
-//NewsletterBounceTask::set_email("X-bla");
+//NewsletterEmailBounceExtension::set_email("X-bla");
 //NewsletterEmailBounceExtension::set_header_name_member_id("X-foo");
 //===================---------------- END newsletter_bounce MODULE ----------------===================

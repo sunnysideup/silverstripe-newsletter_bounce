@@ -1,0 +1,5 @@
+
+NewsletterEmail:
+  extensions:
+    - NewsletterEmailBounceExtension
+

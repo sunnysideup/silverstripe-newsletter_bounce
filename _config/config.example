@@ -1,0 +1,10 @@
+
+
+NewsletterBounceTask:
+  email: "test@gmail.com"
+  password: "pissword"
+
+
+NewsletterEmailBounceExtension:
+  header_name_member_id: X-bla
+  header_name_to_email: X-foo
