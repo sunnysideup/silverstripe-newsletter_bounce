@@ -1,5 +1,5 @@
 {
-	"name": "sunnysideup/newsletter_viewarchive",
+	"name": "sunnysideup/newsletter_bounce",
 	"type": "silverstripe-module",
 	"description": "extension for the Silverstripe newsletter module that allows you to note bounces using g-mail.",
 	"homepage": "http://www.silverstripe-webdevelopment.com",
@@ -14,7 +14,10 @@
 		}
 	],
 	"require":{
-		"silverstripe/framework": "dev-master",
-		"silverstripe/cms": "dev-master"
+		"silverstripe/framework": "~3.1",
+		"silverstripe/cms": "~3.1"
+	},
+	"extra": {
+		"installer-name": "newsletter_bounce"
 	}
 }
