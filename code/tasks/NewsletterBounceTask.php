@@ -3,12 +3,8 @@
 class NewsletterBounceTask extends BuildTask {
 
 	private static $email = '';
-		public static function set_email($s) {self::$email = $s;}
-		public static function get_email() {return self::$email;}
 
 	private static $password = '';
-		public static function set_password($s) {self::$password = $s;}
-		public static function get_password() {return self::$password;}
 
 	protected $title = 'Mark bounced newsletter emails';
 
@@ -18,7 +14,7 @@ class NewsletterBounceTask extends BuildTask {
 
 	function run($request) {
 		$server = '{imap.gmail.com:993/imap/ssl}';
-		$mailbox = imap_open($server, self::$email, self::$password);
+		$mailbox = imap_open($server, Config::inst()->get("NewsletterBounceTask", "email"), Config::inst()->get("NewsletterBounceTask", "password"));
 		if($mailbox) {
 			$emails = imap_search($mailbox, 'UNFLAGGED', SE_UID);
 			if($emails) {
