@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<source xmlns="http://xml.phpdox.net/src">
+  <dir name="/var/www/_modules/newsletter_bounce/trunk">
+    <file name="_config.php" size="656" time="2015-03-14T10:22:12+13:00" unixtime="1426281732" sha1="cd3b36cd99f51a4208aac048aea781dc25b06b86" xml="tokens/_config.php.xml"/>
+    <dir name="code">
+      <dir name="email">
+        <file name="NewsletterEmailBounceExtension.php" size="853" time="2015-03-14T10:22:12+13:00" unixtime="1426281732" sha1="fce19b3c2c7dc6043b8b2fab4ae815e64afb8771" xml="tokens/code/email/NewsletterEmailBounceExtension.php.xml"/>
+      </dir>
+      <dir name="tasks">
+        <file name="NewsletterBounceTask.php" size="2267" time="2015-03-14T10:22:12+13:00" unixtime="1426281732" sha1="46fcdf41123509b6eb2d670326b8e4ab91445f86" xml="tokens/code/tasks/NewsletterBounceTask.php.xml"/>
+      </dir>
+    </dir>
+  </dir>
+</source>

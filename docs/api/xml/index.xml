@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index xmlns="http://xml.phpdox.net/src" basedir="/var/www/_modules/newsletter_bounce/trunk">
+  <namespace name="">
+    <class name="NewsletterEmailBounceExtension" src="code/email/NewsletterEmailBounceExtension.php" xml="classes/NewsletterEmailBounceExtension.xml"/>
+    <class name="NewsletterBounceTask" src="code/tasks/NewsletterBounceTask.php" xml="classes/NewsletterBounceTask.xml"/>
+  </namespace>
+</index>
