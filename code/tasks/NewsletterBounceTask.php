@@ -68,10 +68,12 @@ class NewsletterBounceTask extends BuildTask
      */
     function run($request)
     {
-        $this->debug = false;
-        $server = self::$server;
+        $this->debug = Config::inst()->get('NewsletterBounceTask', 'debug');
+        $server   = Config::inst()->get('NewsletterBounceTask', 'server');
+        $userName = Config::inst()->get('NewsletterBounceTask', 'email');
+        $password = Config::inst()->get('NewsletterBounceTask', 'password');
         /** @var resource $mailbox */
-        $mailbox = imap_open($server, self::$email, self::$password);
+        $mailbox = imap_open($server, $userName, $password);
         if ($mailbox) {
             $emails = imap_search($mailbox, 'UNFLAGGED', SE_UID);
             if ($emails) {
@@ -79,7 +81,7 @@ class NewsletterBounceTask extends BuildTask
                     $emailFlags = imap_fetch_overview($mailbox, $emailID);
                     $isBounce = array(false, false, false);
                     if ($this->debug) {
-                        echo "<hr /><hr /><hr /><hr />$emailID<hr /><pre>";
+                        echo "$emailID<hr /><pre>";
                     }
                     if (!$emailFlags[0]->flagged) { // extra check to make sure we're not checking an already checked e-mail.
                         $isBounce = $this->checkEmail($mailbox, $emailID);
@@ -88,7 +90,7 @@ class NewsletterBounceTask extends BuildTask
                         $this->isBounced($mailbox, $emailID, $isBounce);
                     }
                     if ($this->debug) {
-                        echo "</pre>";
+                        echo "<hr /></pre>";
                     }
                 }
             }
