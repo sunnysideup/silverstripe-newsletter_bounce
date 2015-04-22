@@ -15,5 +15,6 @@
 //NewsletterEmailBounceExtension::set_email("X-email");
 //NewsletterEmailBounceExtension::set_header_name_member_id("X-memberid");
 //NewsletterEmailBounceExtension::setBlacklistLimit(5);
+// The diagnostic code defaults to 'Diagnostic-Code' to find the error.
 //NewsletterEmailBounceExtension::setDiagnosticCode('Diagnostic-Code');
 //===================---------------- END newsletter_bounce MODULE ----------------===================
