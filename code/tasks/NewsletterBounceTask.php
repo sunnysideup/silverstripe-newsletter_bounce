@@ -142,7 +142,11 @@ class NewsletterBounceTask extends BuildTask
      */
     private function isBounced($mailbox, $emailID, $isBounce)
     {
-        $to = $isBounce[1];
+        $stripTags = array(
+            '<',
+            '>'
+        );
+        $to = str_replace($stripTags, array('',''), $isBounce[1]);
         $error = $isBounce[2];
         /** @var Recipient $recipient */
         $recipient = Recipient::get()
@@ -150,14 +154,15 @@ class NewsletterBounceTask extends BuildTask
             ->first();
         if ($recipient->BouncedCount == self::$blacklistLimit) {
             $recipient->BlacklistedEmail = true;
+            $recipient->write();
         } else {
             $recipient->BouncedCount = $recipient->BouncedCount + 1;
             $recipient->write();
 
             /** @var NewsletterEmailBounceRecord $record */
             $record = NewsletterEmailBounceRecord::get()
-                ->filter(array("BounceEmail" => $to))->first();
-            if (!$record->exists()) {
+                ->filter(array("BounceEmail" => $to));
+            if (!$record->count()) {
                 $record = NewsletterEmailBounceRecord::create();
                 $record->BounceEmail = $to;
                 $record->BounceMessage = $error;
