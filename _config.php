@@ -3,7 +3,7 @@
 //copy the lines between the START AND END line to your /mysite/_config.php file and choose the right settings
 //===================---------------- START newsletter_bounce MODULE ----------------===================
 
-//MUST SET, can also be set in a config.yml
+//MUST SET, preferably in your own _config.php. This is deemed to move to a yml file.
 //NewsletterBounceTask::setEmail("test@test.com"); // the username for your bounce-address
 //NewsletterBounceTask::setPassword('testPassword'); // The password for your bounce-address
 //// The novalidate-cert is needed to bypass unofficial certificates!
