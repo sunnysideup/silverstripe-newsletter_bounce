@@ -25,4 +25,8 @@ class NewsletterEmailBounceRecord extends DataObject
     private static $has_one = array(
         'Recipient' => 'Recipient',
     );
+
+    private static $indexes = array(
+        'BounceEmail' => true
+    );
 }
