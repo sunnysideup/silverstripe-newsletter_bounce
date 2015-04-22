@@ -15,4 +15,5 @@ NewsletterBounceTask::setErrorValue("message/delivery-status"); // must be a val
 //NewsletterEmailBounceExtension::set_email("X-email");
 //NewsletterEmailBounceExtension::set_header_name_member_id("X-memberid");
 //NewsletterEmailBounceExtension::setBlacklistLimit(5);
+//NewsletterEmailBounceExtension::setDiagnosticCode('Diagnostic-Code');
 //===================---------------- END newsletter_bounce MODULE ----------------===================
