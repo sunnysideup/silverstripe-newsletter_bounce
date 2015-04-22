@@ -168,6 +168,9 @@ class NewsletterBounceTask extends BuildTask
                 $record->BounceMessage = $error;
                 $record->RecipientID = $recipient->ID;
             }
+            else {
+                $record = $record->first();
+            }
             $record->LastBounceTime = SS_Datetime::create()->now();
             $record->write();
         }
