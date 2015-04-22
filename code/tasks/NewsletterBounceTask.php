@@ -2,6 +2,8 @@
 
 /**
  * Class NewsletterBounceTask
+ *
+ * Handle newsletter bounces from an IMAP box.
  */
 class NewsletterBounceTask extends BuildTask
 {
@@ -35,6 +37,11 @@ class NewsletterBounceTask extends BuildTask
      * @var string
      */
     private static $errorValue = '';
+
+    /**
+     * @var string
+     */
+    private static $diagnosticCode = 'Diagnostic-Code';
 
     /**
      * @var string
@@ -77,7 +84,7 @@ class NewsletterBounceTask extends BuildTask
                     if (!$emailFlags[0]->flagged) { // extra check to make sure we're not checking an already checked e-mail.
                         $isBounce = $this->checkEmail($mailbox, $emailID);
                     }
-                    if ($isBounce[0] && $isBounce[1]) { // Don't check if there's an errormessage
+                    if ($isBounce[0] && $isBounce[1]) { // Only check if the isBounce returns something useful. Error messages are not important.
                         $this->isBounced($mailbox, $emailID, $isBounce);
                     }
                     if ($this->debug) {
@@ -93,17 +100,18 @@ class NewsletterBounceTask extends BuildTask
     }
 
     /**
-     * @param $mailbox
-     * @param $emailID
+     * @param resource $mailbox
+     * @param int $emailID
      * @return array
      */
     private function checkEmail($mailbox, $emailID)
     {
         $bounce = false;
-        $to = "";
+        $to = false;
         $error = false;
         $headers = imap_body($mailbox, $emailID, FT_UID);
         $headers = explode("\n", $headers);
+        // I think this can be made smaller?
         foreach ($headers as $header) {
             $header = explode(':', $header);
             if (count($header) == 2) {
@@ -114,14 +122,14 @@ class NewsletterBounceTask extends BuildTask
                 if ($this->debug) {
                     echo "$name<br />$value";
                 }
-                if ($name == self::$errorName && $value == self::$errorValue) {
+                if ($name == self::$errorName && $value == self::$errorValue) { // Only true if the error is actually an error.
                     $bounce = true;
                 }
-                if ($name == "To") {
+                if ($name == "To") { // This one is always good
                     $to = Convert::raw2sql($value);
                 }
-                if ($name == 'Diagnostic-Code') {
-                    $error = 'Diagnostic-Code: x-unix; user unknown';
+                if ($name == self::$diagnosticCode) { // @todo make this a variable.
+                    $error = $value;
                 }
                 if ($bounce && $to && $error) {
                     break; // Break when we have a bouncer, a $to and a useful $error. The useful error can be skipped, it'll be false.
@@ -146,20 +154,23 @@ class NewsletterBounceTask extends BuildTask
             '<',
             '>'
         );
-        $to = str_replace($stripTags, array('',''), $isBounce[1]);
+        // Some servers reply with "<user@mail.com>", so, let's strip that.
+        $to = str_replace($stripTags, array('', ''), $isBounce[1]);
         $error = $isBounce[2];
         /** @var Recipient $recipient */
         $recipient = Recipient::get()
             ->filter(array("Email" => $to))
             ->first();
         if ($recipient->BouncedCount == self::$blacklistLimit) {
+            // When we reach the blacklistLimit, just blacklist this address.
             $recipient->BlacklistedEmail = true;
             $recipient->write();
         } else {
+            // Otherwise, just up the bouncedCount.
             $recipient->BouncedCount = $recipient->BouncedCount + 1;
             $recipient->write();
 
-            /** @var NewsletterEmailBounceRecord $record */
+            /** @var NewsletterEmailBounceRecord $record Record this bounce in the NewsletterEmailBounceRecord class. */
             $record = NewsletterEmailBounceRecord::get()
                 ->filter(array("BounceEmail" => $to));
             if (!$record->count()) {
@@ -167,14 +178,15 @@ class NewsletterBounceTask extends BuildTask
                 $record->BounceEmail = $to;
                 $record->BounceMessage = $error;
                 $record->RecipientID = $recipient->ID;
-            }
-            else {
+            } else {
                 $record = $record->first();
             }
             $record->LastBounceTime = SS_Datetime::create()->now();
             $record->write();
         }
+        // Set the e-mail flag
         imap_setflag_full($mailbox, $emailID, '\flagged', ST_UID);
+        // And up the bounces counter.
         $this->bounces = $this->bounces + 1;
     }
 
@@ -274,6 +286,21 @@ class NewsletterBounceTask extends BuildTask
         self::$errorValue = $errorValue;
     }
 
+    /**
+     * @return string
+     */
+    public static function getDiagnosticCode()
+    {
+        return self::$diagnosticCode;
+    }
+
+    /**
+     * @param string $diagnosticCode
+     */
+    public static function setDiagnosticCode($diagnosticCode)
+    {
+        self::$diagnosticCode = $diagnosticCode;
+    }
 
 }
 
