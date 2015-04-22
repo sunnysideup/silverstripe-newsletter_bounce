@@ -3,8 +3,10 @@
 NewsletterBounceTask:
   email: "test@gmail.com"
   password: "password"
-
+  server: "{mail.test.com:143}"
+  errorName: "Content-Type"
+  errorValue: "message/delivery-status"
 
 NewsletterEmailBounceExtension:
-  header_name_member_id: X-bla
-  header_name_to_email: X-foo
+  header_name_member_id: X-member-id
+  header_name_to_email: X-address
