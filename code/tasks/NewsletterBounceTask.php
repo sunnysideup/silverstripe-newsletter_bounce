@@ -69,7 +69,7 @@ class NewsletterBounceTask extends BuildTask
     function run($request)
     {
         $this->debug = Config::inst()->get('NewsletterBounceTask', 'debug');
-        $server   = Config::inst()->get('NewsletterBounceTask', 'server');
+        $server = Config::inst()->get('NewsletterBounceTask', 'server');
         $userName = Config::inst()->get('NewsletterBounceTask', 'email');
         $password = Config::inst()->get('NewsletterBounceTask', 'password');
         /** @var resource $mailbox */
@@ -113,6 +113,9 @@ class NewsletterBounceTask extends BuildTask
         $error = false;
         $headers = imap_body($mailbox, $emailID, FT_UID);
         $headers = explode("\n", $headers);
+        $errorName = Config::inst()->get('NewsletterBounceTask', 'errorName');
+        $errorValue = Config::inst()->get('NewsletterBounceTask', 'errorValue');
+        $diagnosticCode = Config::inst()->get('NewsletterBounceTask', 'diagnosticCode');
         // I think this can be made smaller?
         foreach ($headers as $header) {
             $header = explode(':', $header);
@@ -124,13 +127,13 @@ class NewsletterBounceTask extends BuildTask
                 if ($this->debug) {
                     echo "$name<br />$value";
                 }
-                if ($name == self::$errorName && $value == self::$errorValue) { // Only true if the error is actually an error.
+                if ($name == $errorName && $value == $errorValue) { // Only true if the error is actually an error.
                     $bounce = true;
                 }
                 if ($name == "To") { // This one is always good
                     $to = Convert::raw2sql($value);
                 }
-                if ($name == self::$diagnosticCode) { // @todo make this a variable.
+                if ($name == $diagnosticCode) { // @todo make this a variable.
                     $error = $value;
                 }
                 if ($bounce && $to && $error) {
