@@ -94,7 +94,7 @@ class NewsletterBounceTask extends BuildTask
                     }
                 }
             }
-            imap_close($mailbox);
+            imap_close($mailbox,  CL_EXPUNGE); // Close the connection and really delete the messages
             echo $this->bounces . " Bounces found";
         } else {
             user_error("Can not find mailbox", E_USER_NOTICE);
@@ -133,7 +133,7 @@ class NewsletterBounceTask extends BuildTask
                 if ($name == "To") { // This one is always good
                     $to = Convert::raw2sql($value);
                 }
-                if ($name == $diagnosticCode) { // @todo make this a variable.
+                if ($name == $diagnosticCode) {
                     $error = $value;
                 }
                 if ($bounce && $to && $error) {
@@ -191,6 +191,8 @@ class NewsletterBounceTask extends BuildTask
         }
         // Set the e-mail flag
         imap_setflag_full($mailbox, $emailID, '\flagged', ST_UID);
+        // Also mark it for deletion.
+        imap_delete($mailbox, $emailID, ST_UID);
         // And up the bounces counter.
         $this->bounces = $this->bounces + 1;
     }
