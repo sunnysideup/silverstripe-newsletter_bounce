@@ -29,4 +29,10 @@ class NewsletterEmailBounceRecord extends DataObject
     private static $indexes = array(
         'BounceEmail' => true
     );
+
+    private static $summary_fields = array(
+        'BounceEmail',
+        'BounceMessage',
+        'LastBounceTime',
+    );
 }
