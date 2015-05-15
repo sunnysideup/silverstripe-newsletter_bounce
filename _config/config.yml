@@ -2,4 +2,7 @@
 NewsletterEmail:
   extensions:
     - NewsletterEmailBounceExtension
+NewsletterAdmin:
+  extensions:
+    - BounceNewsletterAdminExtension
 

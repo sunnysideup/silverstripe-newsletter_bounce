@@ -19,6 +19,12 @@ looked at in detail
 We are also very happy to provide personalised support
 for this module in exchange for a small donation.
 
+Todo
+-----------------------------------------------
+This could use a bit of cleanup, and a lot of testing.
+
+Manual testing proofs it works.
+
 Installation Instructions
 -----------------------------------------------
 
