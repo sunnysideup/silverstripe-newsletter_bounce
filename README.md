@@ -7,6 +7,7 @@ newsletter module.
 
 Developer
 -----------------------------------------------
+Simon Erkelens - http://casa-laguna.net/
 Nicolaas [at] sunnysideup.co.nz
 
 Documentation
