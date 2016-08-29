@@ -1,37 +1,35 @@
 {
-  "name": "firesphere/newsletter_bounce",
-  "type": "silverstripe-module",
-  "description": "Extra addon for the Silverstripe Newsletter module, to manage bounces and blacklisting.",
-  "homepage": "http://www.silverstripe-webdevelopment.com",
-  "keywords": [
-    "newsletter",
-    "email",
-    "bounce",
-    "email bounce",
-    "newsletter bounces",
-    "silverstripe"
-  ],
-  "license": "Sunny Side Up (BSD-3-Clause and CUSTOM)",
-  "authors": [
-    {
-      "name": "Nicolaas Francken",
-      "homepage": "https://github.com/sunnysideup",
-      "email": "modules@sunnysideup.co.nz",
-      "role": "lead developer"
+    "name": "firesphere/newsletter_bounce",
+    "type": "silverstripe-module",
+    "description": "Extra addon for the Silverstripe Newsletter module, to manage bounces and blacklisting.",
+    "keywords": [
+        "newsletter",
+        "email",
+        "bounce",
+        "email bounce",
+        "newsletter bounces",
+        "silverstripe"
+    ],
+    "license": "Sunny Side Up (BSD-3-Clause and CUSTOM)",
+    "authors": [
+        {
+            "name": "Nicolaas Francken",
+            "email": "modules@sunnysideup.co.nz",
+            "role": "lead developer"
+        },
+        {
+            "name": "Simon 'Sphere' Erkelens",
+            "homepage": "https://github.com/Firesphere",
+            "email": "github@casa-laguna.net",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "~3.1",
+        "silverstripe/cms": "~3.1",
+        "silverstripe/newsletter": "dev-master"
     },
-    {
-      "name": "Simon 'Sphere' Erkelens",
-      "homepage": "https://github.com/Firesphere",
-      "email": "github@casa-laguna.net",
-      "role": "developer"
+    "extra": {
+        "installer-name": "newsletter_bounce"
     }
-  ],
-  "require": {
-    "silverstripe/framework": "~3.1",
-    "silverstripe/cms": "~3.1",
-    "silverstripe/newsletter": "dev-master"
-  },
-  "extra": {
-    "installer-name": "newsletter_bounce"
-  }
 }
