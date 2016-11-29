@@ -66,7 +66,7 @@ class NewsletterBounceTask extends BuildTask
     /**
      * @param $request
      */
-    function run($request)
+    public function run($request)
     {
         $this->debug = Config::inst()->get('NewsletterBounceTask', 'debug');
         $server = Config::inst()->get('NewsletterBounceTask', 'server');
@@ -308,6 +308,4 @@ class NewsletterBounceTask extends BuildTask
     {
         self::$diagnosticCode = $diagnosticCode;
     }
-
 }
-

@@ -3,12 +3,14 @@
     "type": "silverstripe-module",
     "description": "Extra addon for the Silverstripe Newsletter module, to manage bounces and blacklisting.",
     "keywords": [
+        "Silverstripe-CMS",
+        "CMS",
+        "Silverstripe",
         "newsletter",
         "email",
         "bounce",
         "email bounce",
-        "newsletter bounces",
-        "silverstripe"
+        "newsletter bounces"
     ],
     "license": "Sunny Side Up (BSD-3-Clause and CUSTOM)",
     "authors": [
@@ -27,7 +29,7 @@
     "require": {
         "silverstripe/framework": "~3.1",
         "silverstripe/cms": "~3.1",
-        "silverstripe/newsletter": "dev-master"
+        "silverstripe/newsletter": "*"
     },
     "extra": {
         "installer-name": "newsletter_bounce"

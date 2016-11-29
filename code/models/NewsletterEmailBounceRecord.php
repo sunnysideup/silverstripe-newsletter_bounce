@@ -15,7 +15,6 @@
  */
 class NewsletterEmailBounceRecord extends DataObject
 {
-
     private static $db = array(
         'BounceEmail'    => 'Varchar(255)',
         'BounceMessage'  => 'Text',

@@ -12,7 +12,6 @@
  */
 class BounceNewsletterAdminExtension extends DataExtension
 {
-
     private static $managed_models = array(
         'NewsletterEmailBounceRecord',
     );

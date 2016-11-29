@@ -21,7 +21,7 @@ class NewsletterEmailBounceExtension extends Extension
     /**
      * @param $me
      */
-    function updateNewsletterEmail($me)
+    public function updateNewsletterEmail($me)
     {
         $this->owner->addCustomHeader(Config::inst()->get("NewsletterEmailBounceExtension", "header_name_member_id"), "123");
         $this->owner->addCustomHeader(Config::inst()->get("NewsletterEmailBounceExtension", "header_name_to_email"), $this->owner->To());
@@ -30,8 +30,4 @@ class NewsletterEmailBounceExtension extends Extension
         $this->owner->addCustomHeader("Errors-To", Config::inst()->get("NewsletterBounceTask", "email"));
         $this->owner->addCustomHeader("Return-Path", Config::inst()->get("NewsletterBounceTask", "email"));
     }
-
-
 }
-
-
